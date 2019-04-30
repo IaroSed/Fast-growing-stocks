@@ -21,12 +21,15 @@ Exit_FastStocks = open("Results stock growth.txt", 'a',encoding='utf-8')
 
 for ticker in tickers:
     # User pandas_reader.data.DataReader to load the desired data. As simple as that.
-    panel_data = data.DataReader(ticker, 'iex', start_date, end_date)
+    try:
+        panel_data = data.DataReader(ticker, 'iex', start_date, end_date)
     
-    close = panel_data['close']
+        close = panel_data['close']
+    except:
+        print("Error: problem with reading")
     
     try:
-        Exit_FastStocks.write(str(ticker) + "^" + str(round((close.iloc[-1] - close.iloc[-30])/close.iloc[-30]*100,2))+"%" + "^" + str(round((close.iloc[-1] - close.iloc[-60])/close.iloc[-60]*100,2))+"%" + "^" + str(round((close.iloc[-1] - close.iloc[-90])/close.iloc[-90]*100,2))+"%" + "\n")
+        Exit_FastStocks.write(str(ticker) + "^" + str(round((close.iloc[-1] - close.iloc[-30])/close.iloc[-30]*100,2))+"%" + "^" + str(round((close.iloc[-1] - close.iloc[-60])/close.iloc[-60]*100,2))+"%" + "^" + str(round((close.iloc[-1] - close.iloc[-90])/close.iloc[-90]*100,2))+"%" + "^" + str(close.iloc[-1]) + "\n")
     except:
         Exit_FastStocks.write(str(ticker) + "^" + "No information" + "\n") 
         
