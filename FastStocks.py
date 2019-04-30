@@ -36,8 +36,8 @@ for ticker in tickers:
     except:
         Exit_FastStocks.write(str(ticker) + "^" + "No information" + "\n") 
         
-    print(close.iloc[-1])
-    print(close.iloc[-5])
+    #print(close.iloc[-1])
+    #print(close.iloc[-5])
         
     try:
         print(ticker,"30 days growth:",round((close.iloc[-1] - close.iloc[-30])/close.iloc[-30]*100,2),"%")
