@@ -25,7 +25,8 @@ Exit_FastStocks = open("Results stock growth.txt", 'w',encoding='utf-8')
 
 for ticker in tickers:
     
-      
+    print(ticker) 
+    
     try:
         panel_data = data.DataReader(ticker, 'iex', start_date, end_date)
     
@@ -33,26 +34,63 @@ for ticker in tickers:
     except:
         print("Error: problem with reading")
         
-    
+     
     
     try:
-        growth = [round((close.iloc[-1] - close.iloc[-5])/close.iloc[-5]*100,2), round((close.iloc[-1] - close.iloc[-15])/close.iloc[-15]*100,2), round((close.iloc[-1] - close.iloc[-30])/close.iloc[-30]*100,2),round((close.iloc[-1] - close.iloc[-60])/close.iloc[-60]*100,2), round((close.iloc[-1] - close.iloc[-90])/close.iloc[-90]*100,2), round((close.iloc[-1] - close.iloc[-150])/close.iloc[-150]*100,2), round((close.iloc[-1] - close.iloc[-360])/close.iloc[-360]*100,2)]
+        FiveDays = round((close.iloc[-1] - close.iloc[-5])/close.iloc[-5]*100,2)
         
-        if min(growth)> 0:
-            isPositive =  True
-        else:
-            isPositive = False
+    except:
+        FiveDays = 0
+   
+    try:
+        FifteenDays = round((close.iloc[-1] - close.iloc[-15])/close.iloc[-15]*100,2)
         
+    except:
+        FiveDays = 0
+        
+    try:
+        ThirtyDays = round((close.iloc[-1] - close.iloc[-30])/close.iloc[-30]*100,2)
+         
+    except:
+        ThirtyDays = 0
+        
+    try:
+        SixtyDays = round((close.iloc[-1] - close.iloc[-60])/close.iloc[-60]*100,2)
+         
+    except:
+        SixtyDays = 0    
+        
+    try:
+        NinetyDays = round((close.iloc[-1] - close.iloc[-90])/close.iloc[-90]*100,2)
+        
+    except:
+        NinetyDays = 0
+        
+    try:
+        HFiftyDays = round((close.iloc[-1] - close.iloc[-150])/close.iloc[-150]*100,2)
+        
+    except:
+        HFiftyDays = 0
+        
+    try:
+        ThreeHDays = round((close.iloc[-1] - close.iloc[-360])/close.iloc[-360]*100,2)
+    except:
+        ThreeHDays = 0
+        
+ 
+    growth = [FiveDays, FifteenDays, ThirtyDays, SixtyDays, NinetyDays , HFiftyDays, ThreeHDays]
+        
+    if min(growth)> 0:
+        isPositive =  True
+    else:
+        isPositive = False
+        
+    try:   
         Exit_FastStocks.write(str(ticker) + "^" + str(growth[0])+"%"  + "^" + str(growth[1])+"%" + "^" + str(growth[2])+"%" + "^" + str(growth[3])+"%" + "^" + str(growth[4])+"%" + "^" + str(growth[5])+"%" + "^" + str(growth[6])+"%" + "^" + str(close.iloc[-1]) + "^" + str(isPositive) + "^" + str(numpy.average(growth)) + "\n")
     except:
         Exit_FastStocks.write(str(ticker) + "^" + "No information" + "\n") 
 
-    try:
-        print(ticker,"30 days growth:",round((close.iloc[-1] - close.iloc[-30])/close.iloc[-30]*100,2),"%")
-        print(ticker,"60 days growth:",round((close.iloc[-1] - close.iloc[-60])/close.iloc[-60]*100,2),"%")
-        print(ticker,"90 days growth:",round((close.iloc[-1] - close.iloc[-90])/close.iloc[-90]*100,2),"%")
-    except:
-        print(ticker,"Error: not enough data")
-    time.sleep(5)  
+    
+    time.sleep(3)  
 
 Exit_FastStocks.close()
