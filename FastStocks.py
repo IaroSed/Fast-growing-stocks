@@ -19,7 +19,7 @@ tickers = ['YI',	'PIH',	'PIHPP',	'TURN',	'FLWS',	'BCOW',	'FCCY',	'SRCE',	'VNET',
 
 # We would like all available data from 01/01/2000 until 12/31/2016.
 start_date = '2016-11-03'
-end_date = '2019-04-26'
+end_date = '2019-05-01'
 
 Exit_FastStocks = open("Results stock growth.txt", 'w',encoding='utf-8')
 
