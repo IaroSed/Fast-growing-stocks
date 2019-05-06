@@ -78,7 +78,7 @@ for ticker in tickers.iterrows():
  
     growth = [FiveDays, FifteenDays, ThirtyDays, SixtyDays, NinetyDays , HFiftyDays, ThreeHDays]
     
-    daily_growth = [(1+growth[0])^(1/5)-1,(1+growth[1])^(1/15)-1,(1+growth[2])^(1/30)-1,(1+growth[3])^(1/60)-1,(1+growth[4])^(1/90)-1,(1+growth[5])^(1/150)-1,(1+growth[6])^(1/360)-1]
+    daily_growth = [(1+growth[0])**(1/5)-1,(1+growth[1])**(1/15)-1,(1+growth[2])**(1/30)-1,(1+growth[3])**(1/60)-1,(1+growth[4])**(1/90)-1,(1+growth[5])**(1/150)-1,(1+growth[6])**(1/360)-1]
         
     if min(growth)> 0:
         isPositive =  True
