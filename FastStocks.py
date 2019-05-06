@@ -86,7 +86,7 @@ for ticker in tickers.iterrows():
         isPositive = False
         
     try:   
-        Exit_FastStocks.write(str(ticker[0]) + "^" + str(growth[0])+"%"  + "^" + str(growth[1])+"%" + "^" + str(growth[2])+"%" + "^" + str(growth[3])+"%" + "^" + str(growth[4])+"%" + "^" + str(growth[5])+"%" + "^" + str(growth[6])+"%" + "^" + str(daily_growth[0])+"%"  + "^" + str(daily_growth[1])+"%" + "^" + str(daily_growth[2])+"%" + "^" + str(daily_growth[3])+"%" + "^" + str(daily_growth[4])+"%" + "^" + str(daily_growth[5])+"%" + "^" + str(daily_growth[6])+"%" + "^" + str(close.iloc[-1]) + "^" + str(isPositive) + "^" + str(numpy.average(growth))+"%" + "\n")
+        Exit_FastStocks.write(str(ticker[0]) + "^" + str(growth[0])+"%"  + "^" + str(growth[1])+"%" + "^" + str(growth[2])+"%" + "^" + str(growth[3])+"%" + "^" + str(growth[4])+"%" + "^" + str(growth[5])+"%" + "^" + str(growth[6])+"%" + "^" + str(daily_growth[0])+"%"  + "^" + str(daily_growth[1])+"%" + "^" + str(daily_growth[2])+"%" + "^" + str(daily_growth[3])+"%" + "^" + str(daily_growth[4])+"%" + "^" + str(daily_growth[5])+"%" + "^" + str(daily_growth[6])+"%" + "^" + str(close.iloc[-1]) + "^" + str(isPositive) + "^" + str(numpy.average(daily_growth))+"%" + "\n")
     except:
         Exit_FastStocks.write(str(ticker[0]) + "^" + "No information" + "\n") 
 
