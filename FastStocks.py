@@ -77,6 +77,8 @@ for ticker in tickers.iterrows():
         
  
     growth = [FiveDays, FifteenDays, ThirtyDays, SixtyDays, NinetyDays , HFiftyDays, ThreeHDays]
+    
+    daily_growth = [(1+growth[0])^(1/5)-1,(1+growth[1])^(1/15)-1,(1+growth[2])^(1/30)-1,(1+growth[3])^(1/60)-1,(1+growth[4])^(1/90)-1,(1+growth[5])^(1/150)-1,(1+growth[6])^(1/360)-1]
         
     if min(growth)> 0:
         isPositive =  True
@@ -84,9 +86,9 @@ for ticker in tickers.iterrows():
         isPositive = False
         
     try:   
-        Exit_FastStocks.write(str(ticker) + "^" + str(growth[0])+"%"  + "^" + str(growth[1])+"%" + "^" + str(growth[2])+"%" + "^" + str(growth[3])+"%" + "^" + str(growth[4])+"%" + "^" + str(growth[5])+"%" + "^" + str(growth[6])+"%" + "^" + str(close.iloc[-1]) + "^" + str(isPositive) + "^" + str(numpy.average(growth)) + "\n")
+        Exit_FastStocks.write(str(ticker[0]) + "^" + str(growth[0])+"%"  + "^" + str(growth[1])+"%" + "^" + str(growth[2])+"%" + "^" + str(growth[3])+"%" + "^" + str(growth[4])+"%" + "^" + str(growth[5])+"%" + "^" + str(growth[6])+"%" + "^" + str(daily_growth[0])+"%"  + "^" + str(daily_growth[1])+"%" + "^" + str(daily_growth[2])+"%" + "^" + str(daily_growth[3])+"%" + "^" + str(daily_growth[4])+"%" + "^" + str(daily_growth[5])+"%" + "^" + str(daily_growth[6])+"%" + "^" + str(close.iloc[-1]) + "^" + str(isPositive) + "^" + str(numpy.average(growth))+"%" + "\n")
     except:
-        Exit_FastStocks.write(str(ticker) + "^" + "No information" + "\n") 
+        Exit_FastStocks.write(str(ticker[0]) + "^" + "No information" + "\n") 
 
     
     time.sleep(2)  
