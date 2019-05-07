@@ -35,50 +35,86 @@ for ticker in tickers.iterrows():
      
     
     try:
-        FiveDays = round((close.iloc[-1] - close.iloc[-5])/close.iloc[-5]*100,2)
+        FiveDays = round((close.iloc[-1] - close.iloc[-5])/close.iloc[-5],2)
         
     except:
         FiveDays = 0
    
     try:
-        FifteenDays = round((close.iloc[-1] - close.iloc[-15])/close.iloc[-15]*100,2)
+        FifteenDays = round((close.iloc[-1] - close.iloc[-15])/close.iloc[-15],2)
         
     except:
-        FiveDays = 0
+        FifteenDays = 0
         
     try:
-        ThirtyDays = round((close.iloc[-1] - close.iloc[-30])/close.iloc[-30]*100,2)
+        ThirtyDays = round((close.iloc[-1] - close.iloc[-30])/close.iloc[-30],2)
          
     except:
         ThirtyDays = 0
         
     try:
-        SixtyDays = round((close.iloc[-1] - close.iloc[-60])/close.iloc[-60]*100,2)
+        SixtyDays = round((close.iloc[-1] - close.iloc[-60])/close.iloc[-60],2)
          
     except:
         SixtyDays = 0    
         
     try:
-        NinetyDays = round((close.iloc[-1] - close.iloc[-90])/close.iloc[-90]*100,2)
+        NinetyDays = round((close.iloc[-1] - close.iloc[-90])/close.iloc[-90],2)
         
     except:
         NinetyDays = 0
         
     try:
-        HFiftyDays = round((close.iloc[-1] - close.iloc[-150])/close.iloc[-150]*100,2)
+        HFiftyDays = round((close.iloc[-1] - close.iloc[-150])/close.iloc[-150],2)
         
     except:
         HFiftyDays = 0
         
     try:
-        ThreeHDays = round((close.iloc[-1] - close.iloc[-360])/close.iloc[-360]*100,2)
+        ThreeHDays = round((close.iloc[-1] - close.iloc[-360])/close.iloc[-360],2)
     except:
         ThreeHDays = 0
         
  
     growth = [FiveDays, FifteenDays, ThirtyDays, SixtyDays, NinetyDays , HFiftyDays, ThreeHDays]
     
-    daily_growth = [(1+growth[0])**(1/5)-1,(1+growth[1])**(1/15)-1,(1+growth[2])**(1/30)-1,(1+growth[3])**(1/60)-1,(1+growth[4])**(1/90)-1,(1+growth[5])**(1/150)-1,(1+growth[6])**(1/360)-1]
+    try:
+        FiveDays_daily = (1+FiveDays)**(1/5)-1
+    except:
+        FiveDays_daily = 0    
+        
+    try:    
+        FifteenDays_daily = (1+FifteenDays)**(1/15)-1
+    except:
+        FifteenDays_daily = 0    
+        
+    try:    
+        ThirtyDays_daily = (1+ThirtyDays)**(1/30)-1
+    except:
+        ThirtyDays_daily = 0    
+        
+    try:    
+        SixtyDays_daily = (1+SixtyDays)**(1/60)-1
+    except:
+        SixtyDays_daily = 0    
+        
+    try:    
+        NinetyDays_daily = (1+NinetyDays)**(1/90)-1
+    except:
+        NinetyDays_daily = 0    
+        
+    try:    
+        HFiftyDays_daily = (1+HFiftyDays)**(1/150)-1
+    except:
+        HFiftyDays_daily = 0    
+        
+    try:    
+        ThreeHDays_daily = (1+ThreeHDays)**(1/360)-1
+    except:
+        ThreeHDays_daily = 0    
+        
+    
+    daily_growth = [FiveDays_daily, FifteenDays_daily, ThirtyDays_daily, SixtyDays_daily, NinetyDays_daily , HFiftyDays_daily, ThreeHDays_daily]
         
     if min(growth)> 0:
         isPositive =  True
@@ -86,9 +122,9 @@ for ticker in tickers.iterrows():
         isPositive = False
         
     try:   
-        Exit_FastStocks.write(str(ticker[0]) + "^" + str(growth[0])+"%"  + "^" + str(growth[1])+"%" + "^" + str(growth[2])+"%" + "^" + str(growth[3])+"%" + "^" + str(growth[4])+"%" + "^" + str(growth[5])+"%" + "^" + str(growth[6])+"%" + "^" + str(daily_growth[0])+"%"  + "^" + str(daily_growth[1])+"%" + "^" + str(daily_growth[2])+"%" + "^" + str(daily_growth[3])+"%" + "^" + str(daily_growth[4])+"%" + "^" + str(daily_growth[5])+"%" + "^" + str(daily_growth[6])+"%" + "^" + str(close.iloc[-1]) + "^" + str(isPositive) + "^" + str(numpy.average(daily_growth))+"%" + "\n")
+        Exit_FastStocks.write(str(ticker[0]) + "@" + str(growth[0])  + "@" + str(growth[1]) + "@" + str(growth[2])+ "@" + str(growth[3]) + "@" + str(growth[4]) + "@" + str(growth[5]) + "@" + str(growth[6]) + "@" + str(daily_growth[0])  + "@" + str(daily_growth[1]) + "@" + str(daily_growth[2])+ "@" + str(daily_growth[3]) + "@" + str(daily_growth[4]) + "@" + str(daily_growth[5]) + "@" + str(daily_growth[6]) + "@" + str(close.iloc[-1]) + "@" + str(isPositive) + "@" + str(numpy.average(daily_growth))+ "\n")
     except:
-        Exit_FastStocks.write(str(ticker[0]) + "^" + "No information" + "\n") 
+        Exit_FastStocks.write(str(ticker[0]) + "@" + "No information" + "\n") 
 
     
     time.sleep(2)  
