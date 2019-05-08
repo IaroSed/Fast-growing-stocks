@@ -17,9 +17,9 @@ tickers = pd.read_excel('tickers.xlsx', index_col=0)
 
 # We would like all available data from 01/01/2000 until 12/31/2016.
 start_date = '2017-11-03'
-end_date = '2019-05-03'
+end_date = '2019-05-07'
 
-Exit_FastStocks = open("Results stock growth.txt", 'w',encoding='utf-8')
+Exit_FastStocks = open("Results stock growth 20190507.txt", 'w',encoding='utf-8')
 
 for ticker in tickers.iterrows():
     
@@ -33,45 +33,58 @@ for ticker in tickers.iterrows():
         print("Error: problem with reading")
         
      
-    
     try:
-        FiveDays = round((close.iloc[-1] - close.iloc[-5])/close.iloc[-5],2)
+        LastDay = round((panel_data.loc['2019-05-07']['close']-panel_data.loc['2019-05-03']['close'])/panel_data.loc['2019-05-03']['close'],2)
+        
+    except:
+        LastDay = 0
+        
+        
+    try:
+        PreviousDay = round((panel_data.loc['2019-05-02']['close']-panel_data.loc['2019-04-30']['close'])/panel_data.loc['2019-04-30']['close'],2)
+        
+    except:
+        PreviousDay = 0
+        
+        
+    try:
+        FiveDays = round((close.iloc[-1] - close.iloc[-5])/close.iloc[-5],4)
         
     except:
         FiveDays = 0
    
     try:
-        FifteenDays = round((close.iloc[-1] - close.iloc[-15])/close.iloc[-15],2)
+        FifteenDays = round((close.iloc[-1] - close.iloc[-15])/close.iloc[-15],4)
         
     except:
         FifteenDays = 0
         
     try:
-        ThirtyDays = round((close.iloc[-1] - close.iloc[-30])/close.iloc[-30],2)
+        ThirtyDays = round((close.iloc[-1] - close.iloc[-30])/close.iloc[-30],4)
          
     except:
         ThirtyDays = 0
         
     try:
-        SixtyDays = round((close.iloc[-1] - close.iloc[-60])/close.iloc[-60],2)
+        SixtyDays = round((close.iloc[-1] - close.iloc[-60])/close.iloc[-60],4)
          
     except:
         SixtyDays = 0    
         
     try:
-        NinetyDays = round((close.iloc[-1] - close.iloc[-90])/close.iloc[-90],2)
+        NinetyDays = round((close.iloc[-1] - close.iloc[-90])/close.iloc[-90],4)
         
     except:
         NinetyDays = 0
         
     try:
-        HFiftyDays = round((close.iloc[-1] - close.iloc[-150])/close.iloc[-150],2)
+        HFiftyDays = round((close.iloc[-1] - close.iloc[-150])/close.iloc[-150],4)
         
     except:
         HFiftyDays = 0
         
     try:
-        ThreeHDays = round((close.iloc[-1] - close.iloc[-360])/close.iloc[-360],2)
+        ThreeHDays = round((close.iloc[-1] - close.iloc[-360])/close.iloc[-360],4)
     except:
         ThreeHDays = 0
         
@@ -116,13 +129,13 @@ for ticker in tickers.iterrows():
     
     daily_growth = [FiveDays_daily, FifteenDays_daily, ThirtyDays_daily, SixtyDays_daily, NinetyDays_daily , HFiftyDays_daily, ThreeHDays_daily]
         
-    if min(growth)> 0:
+    if min(growth)>= 0:
         isPositive =  True
     else:
         isPositive = False
         
     try:   
-        Exit_FastStocks.write(str(ticker[0]) + "@" + str(growth[0])  + "@" + str(growth[1]) + "@" + str(growth[2])+ "@" + str(growth[3]) + "@" + str(growth[4]) + "@" + str(growth[5]) + "@" + str(growth[6]) + "@" + str(daily_growth[0])  + "@" + str(daily_growth[1]) + "@" + str(daily_growth[2])+ "@" + str(daily_growth[3]) + "@" + str(daily_growth[4]) + "@" + str(daily_growth[5]) + "@" + str(daily_growth[6]) + "@" + str(close.iloc[-1]) + "@" + str(isPositive) + "@" + str(numpy.average(daily_growth))+ "\n")
+        Exit_FastStocks.write(str(ticker[0]) + "@" + str(LastDay) + "@" + str(PreviousDay)  + "@" + str(growth[0])  + "@" + str(growth[1]) + "@" + str(growth[2])+ "@" + str(growth[3]) + "@" + str(growth[4]) + "@" + str(growth[5]) + "@" + str(growth[6]) + "@" + str(daily_growth[0])  + "@" + str(daily_growth[1]) + "@" + str(daily_growth[2])+ "@" + str(daily_growth[3]) + "@" + str(daily_growth[4]) + "@" + str(daily_growth[5]) + "@" + str(daily_growth[6]) + "@" + str(close.iloc[-1]) + "@" + str(isPositive) + "@" + str(numpy.average(daily_growth))+ "\n")
     except:
         Exit_FastStocks.write(str(ticker[0]) + "@" + "No information" + "\n") 
 
