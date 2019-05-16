@@ -17,9 +17,17 @@ tickers = pd.read_excel('tickers.xlsx', index_col=0)
 
 # We would like all available data from 01/01/2000 until 12/31/2016.
 start_date = '2017-11-03'
-end_date = '2019-05-07'
+end_date = '2019-05-15'
 
-Exit_FastStocks = open("Results stock growth 20190507.txt", 'w',encoding='utf-8')
+Exit_FastStocks = open("Results stock growth 20190515.txt", 'w',encoding='utf-8')
+
+
+
+panel_data = data.DataReader('SPY', 'iex', start_date, end_date)
+
+SP500_lastcrash = round((panel_data.loc['2019-05-13']['close']-panel_data.loc['2019-05-10']['close'])/panel_data.loc['2019-05-10']['close'],4)
+SP500_previouscrash = round((panel_data.loc['2019-05-07']['close']-panel_data.loc['2019-05-06']['close'])/panel_data.loc['2019-05-06']['close'],4) 
+
 
 for ticker in tickers.iterrows():
     
@@ -34,17 +42,18 @@ for ticker in tickers.iterrows():
         
      
     try:
-        LastDay = round((panel_data.loc['2019-05-07']['close']-panel_data.loc['2019-05-03']['close'])/panel_data.loc['2019-05-03']['close'],2)
+        LastCrash = round((panel_data.loc['2019-05-13']['close']-panel_data.loc['2019-05-10']['close'])/panel_data.loc['2019-05-10']['close'],4)
         
     except:
-        LastDay = 0
+        LasCrashDay = 0
+        
         
         
     try:
-        PreviousDay = round((panel_data.loc['2019-05-02']['close']-panel_data.loc['2019-04-30']['close'])/panel_data.loc['2019-04-30']['close'],2)
+        PreviousCrash = round((panel_data.loc['2019-05-07']['close']-panel_data.loc['2019-05-06']['close'])/panel_data.loc['2019-05-06']['close'],4)
         
     except:
-        PreviousDay = 0
+        PreviousCrash = 0
         
         
     try:
@@ -135,7 +144,7 @@ for ticker in tickers.iterrows():
         isPositive = False
         
     try:   
-        Exit_FastStocks.write(str(ticker[0]) + "@" + str(LastDay) + "@" + str(PreviousDay)  + "@" + str(growth[0])  + "@" + str(growth[1]) + "@" + str(growth[2])+ "@" + str(growth[3]) + "@" + str(growth[4]) + "@" + str(growth[5]) + "@" + str(growth[6]) + "@" + str(daily_growth[0])  + "@" + str(daily_growth[1]) + "@" + str(daily_growth[2])+ "@" + str(daily_growth[3]) + "@" + str(daily_growth[4]) + "@" + str(daily_growth[5]) + "@" + str(daily_growth[6]) + "@" + str(close.iloc[-1]) + "@" + str(isPositive) + "@" + str(numpy.average(daily_growth))+ "\n")
+        Exit_FastStocks.write(str(ticker[0]) + "@" + str(LastCrash/SP500_lastcrash) + "@" + str(PreviousCrash/SP500_previouscrash)  + "@" + str(growth[0])  + "@" + str(growth[1]) + "@" + str(growth[2])+ "@" + str(growth[3]) + "@" + str(growth[4]) + "@" + str(growth[5]) + "@" + str(growth[6]) + "@" + str(daily_growth[0])  + "@" + str(daily_growth[1]) + "@" + str(daily_growth[2])+ "@" + str(daily_growth[3]) + "@" + str(daily_growth[4]) + "@" + str(daily_growth[5]) + "@" + str(daily_growth[6]) + "@" + str(close.iloc[-1]) + "@" + str(isPositive) + "@" + str(numpy.average(daily_growth))+ "\n")
     except:
         Exit_FastStocks.write(str(ticker[0]) + "@" + "No information" + "\n") 
 
